@@ -1,0 +1,49 @@
+{
+  "name": "amplify-graphql-api-cdk-typesense-transformer",
+  "version": "1.0.2",
+  "description": "Typesense transformer for AWS AppSync to use with AmplifyGraphqlApi construct",
+  "main": "dist/TypesenseTransformer.js",
+  "types": "dist/TypesenseTransformer.d.ts",
+  "files": [
+    "dist/**/*",
+    "dist/code.zip"
+  ],
+  "keywords": [
+    "aws",
+    "amplify",
+    "graphql",
+    "typesense",
+    "search"
+  ],
+  "author": "Harshit Gupta",
+  "license": "MIT",
+  "homepage": "https://github.com/harshit9715/amplify-graphql-api-cdk-typesense-transformer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/harshit9715/amplify-graphql-api-cdk-typesense-transformer.git"
+  },
+  "displayName": "AmplifyGraphqlApiCdkTypesenseTransformer",
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "npm run build:lambda && npm run build:transformer",
+    "build:transformer": "tsc",
+    "clean:code": "rm -rf code/dist code/node_modules code/package-lock.json && cd code && npm install",
+    "build:lambda": "npm run clean:code && cd code && tsc && cd ..",
+    "package:lambda": "cd code && zip -r ../dist/code.zip . -x '*.ts' && cd ..",
+    "postpackage:lambda": "rm -rf code/dist code/node_modules code/package-lock.json code/*.js code/*.d.ts",
+    "postbuild": "npm run build:lambda && npm run package:lambda && npm run postpackage:lambda",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "typescript": "^4.x.x"
+  },
+  "dependencies": {
+    "@aws-amplify/graphql-transformer-core": "^3.1.1",
+    "@aws-amplify/graphql-transformer-interfaces": "^4.1.0",
+    "aws-cdk-lib": "^2.160.0",
+    "constructs": "^10.3.0",
+    "graphql": "^16.9.0",
+    "graphql-transformer-common": "^5.0.1"
+  }
+}
